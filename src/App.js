@@ -1,24 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
 
+import { Navbar } from "./components/Navbar";
+import { Editor } from "./components/query/Editor";
+
 function App() {
+  // https://blog.shevarezo.fr/uploads/posts/bulk/8erAyPMw_dbdiagram-io_schema.png
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar />
+      <div className="row">
+        <div className="col-md-3">
+          <div className="container">
+            <Editor/>
+          </div>
+        </div>
+        <div className="col-md-7">
+          <div className="container-fluid" style={{background: 'purple'}}>
+              <p>CODE HERE</p>
+            </div>
+        </div>
+      </div>
+
     </div>
+
   );
 }
 
