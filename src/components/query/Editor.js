@@ -15,19 +15,16 @@ export const Editor = (props) => {
         const { value } = keyObject.target; 
     }*/
     
-
-
-
-
     const onChangeEditor = (event) => {
         const { value } = event.target;
         setRawQuery(value);
     }
 
 
-    const onSubmitRawQuery = async () => {
+    const onSubmitRawQuery = async (AppContext) => {
+        AppContext.schema = [...AppContext.schema, "ok"]
 
-       let req = await fetch(`${apiConfig.wyrmqueryUrl}/query`, {
+        let req = await fetch(`${apiConfig.wyrmqueryUrl}/query`, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -52,7 +49,7 @@ export const Editor = (props) => {
                         </div>
                     </div>
                     <div>
-                        <button className="btn btn-md btn-info" onClick={onSubmitRawQuery}>Submit</button>
+                        <button className="btn btn-md btn-info" onClick={() => onSubmitRawQuery(context)}>Submit</button>
                     </div>
 
                     </div>

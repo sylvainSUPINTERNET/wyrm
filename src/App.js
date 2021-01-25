@@ -11,7 +11,9 @@ import Draggable, {DraggableCore} from 'react-draggable';
 
 export const LanguageContext = React.createContext({
   language: "",
-  setLanguage: () => {}
+  setLanguage: () => {},
+  schema: [],
+  setSchema: () => {}
 })
 
 function App() {
@@ -21,9 +23,19 @@ function App() {
     setState({...state, language: language})
   }
 
+  const setSchema = (apiInputSchema) => {
+
+      let currentState = {...state};
+      currentState.schema = [...currentState.schema, apiInputSchema];
+    
+      setSchema({...currentState})
+  }
+
   const initState = {
     language: "FR",
-    setLanguage: setLanguage
+    setLanguage: setLanguage,
+    schema: [],
+    setSchema: setSchema
   } 
 
   const [state, setState] = useState(initState)
