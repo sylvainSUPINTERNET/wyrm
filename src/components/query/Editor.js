@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { LanguageContext } from '../../App';
 import {apiConfig} from "../../conf/api";
+ 
 
 import {consoleStyle, editorWindow} from "./style/Editor.style"
+
 
 export const Editor = (props) => {
     const [rawQuery, setRawQuery] = useState(null);
@@ -11,6 +14,9 @@ export const Editor = (props) => {
     const onPressKey = (keyObject) => {
         const { value } = keyObject.target; 
     }*/
+    
+
+
 
 
     const onChangeEditor = (event) => {
@@ -35,15 +41,25 @@ export const Editor = (props) => {
 
     
 
-    return ( <div>
-        <div className="container-fluid" style={consoleStyle}>
-            <textarea style={editorWindow} /*onKeyDown={onPressKey}*/ onChange={onChangeEditor} />
-        </div>
-        <div>
-            <button className="btn btn-md btn-info" onClick={onSubmitRawQuery}>Submit</button>
-        </div>
+    return ( 
+        <LanguageContext.Consumer>
+                {(context) => (
+                    <div>
+                    <div className="container-fluid" style={consoleStyle}>
+                        <textarea style={editorWindow} /*onKeyDown={onPressKey}*/ onChange={onChangeEditor} />
+                        <div onDrag={e => {console.log(e)}} style={{width:"100px", height: "100px", background: 'red'}}>
+                            <p>{context.language}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button className="btn btn-md btn-info" onClick={onSubmitRawQuery}>Submit</button>
+                    </div>
 
-    </div>)
+                    </div>
+                )}
+
+         </LanguageContext.Consumer>
+)
 }
 
 
