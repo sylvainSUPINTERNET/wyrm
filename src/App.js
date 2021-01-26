@@ -6,44 +6,31 @@ import { Editor } from "./components/query/Editor";
 import React, { useState } from 'react';
 
 
-import Draggable, {DraggableCore} from 'react-draggable';
+import Draggable from 'react-draggable';
 
 
-export const LanguageContext = React.createContext({
-  language: "",
-  setLanguage: () => {},
-  schema: [],
-  setSchema: () => {}
-})
+export const SchemaContext = React.createContext({})
 
 function App() {
   // https://blog.shevarezo.fr/uploads/posts/bulk/8erAyPMw_dbdiagram-io_schema.png
 
-  const setLanguage = (language) => {
-    setState({...state, language: language})
-  }
-
   const setSchema = (apiInputSchema) => {
-
-      let currentState = {...state};
-      currentState.schema = [...currentState.schema, apiInputSchema];
-    
-      setSchema({...currentState})
+    state.schemas = [...state.schemas, apiInputSchema]
+    setState({...state})
   }
 
-  const initState = {
-    language: "FR",
-    setLanguage: setLanguage,
-    schema: [],
-    setSchema: setSchema
-  } 
+  
 
-  const [state, setState] = useState(initState)
+  const [state, setState] = useState({
+    schemas: [],
+    setSchema: setSchema
+  })
+
 
 
 
   return (
-    <LanguageContext.Provider value={state}>
+    <SchemaContext.Provider value={state}>
     <div>
       <Navbar />
       <div className="row">
@@ -60,11 +47,16 @@ function App() {
                 </div>
               </Draggable>
             </div>
+            {
+              state.schemas.map( schema => {
+                return <p>{schema.name}</p>
+              })
+            }
         </div>
       </div>
 
     </div>
-    </LanguageContext.Provider>
+    </SchemaContext.Provider>
 
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { LanguageContext } from '../../App';
+import { SchemaContext } from '../../App';
 import {apiConfig} from "../../conf/api";
  
 
@@ -21,25 +21,31 @@ export const Editor = (props) => {
     }
 
 
-    const onSubmitRawQuery = async (AppContext) => {
-        AppContext.schema = [...AppContext.schema, "ok"]
+    const onSubmitRawQuery = async (SchemaContext) => {
+        //SchemaContext.schema = [...SchemaContext.schema, "ok"]
 
-        let req = await fetch(`${apiConfig.wyrmqueryUrl}/query`, {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        method: "POST",
-        body: JSON.stringify({query: rawQuery})
-     })
-       let json = await req.json();
-       console.log(json);
+
+        let res = await fetch(`${apiConfig.wyrmqueryUrl}/query`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({query: rawQuery})
+        })
+
+        if ( res.status === 200 ) {
+            let json = await res.json();
+            let { data } = json;
+            SchemaContext.setSchema(data);
+        }
+ 
     }
 
     
 
     return ( 
-        <LanguageContext.Consumer>
+        <SchemaContext.Consumer>
                 {(context) => (
                     <div>
                     <div className="container-fluid" style={consoleStyle}>
@@ -55,7 +61,7 @@ export const Editor = (props) => {
                     </div>
                 )}
 
-         </LanguageContext.Consumer>
+         </SchemaContext.Consumer>
 )
 }
 
