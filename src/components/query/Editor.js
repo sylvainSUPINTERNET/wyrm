@@ -1,13 +1,16 @@
-import React, { useState, useContext } from 'react';
-import { SchemaContext } from '../../App';
+import React, { useState } from 'react';
+
 import {apiConfig} from "../../conf/api";
- 
 
 import {consoleStyle, editorWindow} from "./style/Editor.style"
 
+import {SchemaContext} from "../Context"
 
 export const Editor = (props) => {
     const [rawQuery, setRawQuery] = useState(null);
+
+    //Access to updated Context
+    const schemasCtxTest = React.useContext(SchemaContext);
 
     // https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Editable_content/Rich-Text_Editing_in_Mozilla
     /*
@@ -37,7 +40,10 @@ export const Editor = (props) => {
         if ( res.status === 200 ) {
             let json = await res.json();
             let { data } = json;
+            // update App component parent + ctx value (do not forget useContext to get updated values)
             SchemaContext.setSchema(data);
+
+            console.log("CTX SCHEMA : ", schemasCtxTest)
         }
  
     }
