@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import {SchemaContext} from "./components/Context";
 
 import Draggable from 'react-draggable';
+import {DrawShape} from "./components/schema/DrawShape";
 
 
 
@@ -47,16 +48,9 @@ function App() {
         <div className="col-md-7">
           <div className="container-fluid" style={{background: 'purple'}}>
               <Draggable>
-                <div>
-                  Sal
-                </div>
+                <DrawShape schemas={state.schemas}/>
               </Draggable>
             </div>
-            {
-              state.schemas.map( schema => {
-                return <p>{schema.name}</p>
-              })
-            }
         </div>
       </div>
 
