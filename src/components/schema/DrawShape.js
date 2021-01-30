@@ -1,21 +1,23 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import Draggable from 'react-draggable';
+
+import { DbShapeStyle, DbShapeStyleTerminal } from "./DrawShape.style";
 
 const _drawDatabase = (schema) => {
-    console.log("WIP draw schema DATABASE card")
-    // TODO wip
     return (
-        <div className="card">
-            <pre>{JSON.stringify(schema)}</pre>
+        <div className="card" style={{width: schema.width, height: schema.height}}>
+            <h4 className="display-12 p-2 text-center" style={DbShapeStyle}>{schema.name}</h4>
             <ul className="list-group list-group-flush">
-                <li className="list-group-item">{schema.name}</li>
+            <pre>{JSON.stringify(schema)}</pre>
+                {/*<li className="list-group-item">{schema.name}</li>*/}
             </ul>
         </div>
     )
 }
 
 const _getDrawType = (schema) => {
-    console.log("GET DRAW TYPE", schema)
+
     const { type } = schema
 
     if ( type === "DATABASE" ) {
@@ -27,13 +29,15 @@ export const DrawShape = (props) => {
     const { schemas } = props
 
     return (
-        <div>
-            {
-                schemas.map( schema => {
-                    return _getDrawType(schema)
-                })
-            }
-        </div>
+            <div>
+                {
+                    schemas.map( schema => {
+                        return <Draggable>
+                            { _getDrawType(schema) }
+                        </Draggable>
+                    })
+                }
+            </div>
     )
 }
 
